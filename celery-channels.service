@@ -1,0 +1,13 @@
+[Unit]
+Description=Celery server script for django channels
+After=network.target
+
+[Service]
+User=honakm
+Group=honakm
+WorkingDirectory=/home/honakm/channels
+ExecStart=/home/honakm/channels/venv/bin/celery -A forge worker -B 
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
