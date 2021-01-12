@@ -1,0 +1,6 @@
+[submodule "channels"]
+	path = channels
+	url = https://github.com/RPIForge/channels.git
+[submodule "website"]
+	path = website
+	url = https://github.com/RPIForge/website.git
