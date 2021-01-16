@@ -1,0 +1,6 @@
+[submodule "website/website"]
+	path = website/website
+	url = https://github.com/RPIForge/website.git
+[submodule "octoprint/octoprint-companion"]
+	path = octoprint/octoprint-companion
+	url = https://github.com/RPIForge/octoprint-companion.git
