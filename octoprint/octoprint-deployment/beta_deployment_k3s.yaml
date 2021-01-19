@@ -1,0 +1,43 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+        name: beta-deployment
+        labels:
+                printer: beta
+spec:
+        replicas: 1
+        selector:
+                matchLabels:
+                       printer: beta
+        template:
+                metadata:
+                        labels:
+                                printer: beta
+                spec:
+                        nodeName: ubuntugeneral
+                        restartPolicy: Always
+                        containers:
+                                 - name: companion
+                                   image: rpiforge/octoprint-companion:latest
+                                   env:
+                                         - name: ENV_FILE
+                                           value: /config/octoprint.env
+                                         - name: OCTOPRINT_IP
+                                           value: localhost
+                                   volumeMounts:
+                                         - name: config
+                                           mountPath: /config
+                                 - name: octoprint
+                                   image: rpiforge/octoprint-deployment:latest
+                                   volumeMounts:
+                                         - name: config
+                                           mountPath: /config  
+                                         - name: octoprint
+                                           mountPath: /octoprint
+                                   ports:
+                                         - containerPort: 5000
+                        volumes:
+                                - name: config
+                                  emptyDir: {}
+                                - name: octoprint
+                                  emptyDir: {}

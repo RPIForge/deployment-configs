@@ -1,0 +1,43 @@
+SERVER COMMANDS
+#Install Docker - https://docs.docker.com/engine/install/ubuntu/
+sudo apt-get update
+sudo apt-get install \
+    apt-transport-https \
+    ca-certificates \
+    curl \
+    gnupg-agent \
+    software-properties-common
+curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+sudo apt-key fingerprint 0EBFCD88
+sudo add-apt-repository \
+   "deb [arch=amd64] https://download.docker.com/linux/ubuntu \
+   $(lsb_release -cs) \
+   stable"
+sudo apt-get update
+sudo apt-get install docker-ce docker-ce-cli containerd.io
+
+
+#install k3s with docker backened  - https://rancher.com/docs/k3s/latest/en/advanced/
+curl -sfL https://get.k3s.io | sh - --docker #to install node
+cat /var/lib/rancher/k3s/server/node-token #to get token for pods
+
+#build/import docker images
+#build
+git clone https://github.com/RPIForge/octoprint-companion.git
+cd octoprint-companion
+cd octoprint-companion
+sudo docker build -t companion .
+cd ../octoprint-octoprint
+sudo docker build -t octoprint-deployment .
+
+#edit deployment to have correct labels
+## should be printer=printer-name
+vim printer.yaml 
+kubectl apply -f <deployment>
+
+
+
+
+POD COMMANDS
+curl -sfL https://get.k3s.io | K3S_URL=https://myserver:6443 K3S_TOKEN=mynodetoken sh -
+
